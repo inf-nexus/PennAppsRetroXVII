@@ -92,7 +92,6 @@ class MagicModel(object):
             self.model = model_dict['model']
         else:
             extracted_features = self.extract_relevant_fields()
-            print(extracted_features[1230])
             self.dictionary = gensim.corpora.Dictionary(extracted_features)
             self.corpus = [self.dictionary.doc2bow(document) for document in extracted_features]
             self.tf_idf = gensim.models.TfidfModel(self.corpus)
@@ -105,23 +104,28 @@ class MagicModel(object):
             model_dict['model'] = self.model
             pickle.dump(model_dict, open('model.p', 'wb'))
 
+
     def calc_similarity(self, text, n_best=5, threshold=0.0):
         prediction = self.model[self.convert2tfidf(text)]
 
         sorted_predictions = sorted(enumerate(prediction), key=lambda x: x[1], reverse=True)
 
-        if len(sorted_predictions) < n_best:
-            for i, elem in enumerate(sorted_predictions):
-                if elem[1] < threshold:
-                    return sorted_predictions[:i]
+        # self.calculate_originality(sorted_predictions)
+        # if len(sorted_predictions) < n_best:
+        #     for i, elem in enumerate(sorted_predictions):
+                # if elem[1] < threshold:
+                    # return sorted_predictions[:i]
             # return sorted_predictions
-        else:
-            for i, elem in enumerate(sorted_predictions):
-                if elem[1] < threshold:
-                    return sorted_predictions[:i]
+        # else:
+        #     for i, elem in enumerate(sorted_predictions):
+        #         if elem[1] < threshold:
+                    # return sorted_predictions[:i]
             # return sorted_predictions[:n_best]
 
-        return self.convert2readable(sorted_predictions[:n_best])
+        return [(self.data[pred[0]], pred[1]) for pred in sorted_predictions[:n_best]], self.calculate_originality(sorted_predictions)
+
+
+        # return self.convert2readable(sorted_predictions[:n_best])
 
     def convert2readable(self, preds):
         return [" ".join(self.data[pred[0]]['tagline']) for pred in preds]
@@ -133,9 +137,21 @@ class MagicModel(object):
 
         return query_doc_tf_idf
 
+    def calculate_originality(self, predictions):
+
+        scores = []
+
+        for elem in predictions[:10]:
+            scores.append(elem[1])
+
+        print(sum(scores)/len(scores))
+        return sum(scores)/len(scores)
+
+
+
 
 def getModel():
-    filepath = os.path.join(os.getcwd(), 'data')
+    filepath = os.path.join(os.getcwd(), 'data', 'json')
 
     data_raw = load_data(filepath)
     data_preprocessed = preprocess_data(data_raw)
@@ -154,7 +170,7 @@ def load_weights(path):
 
 
 def get_score_dict(file_name):
-    filepath = os.path.join(os.getcwd(), 'data/' + file_name)
+    filepath = os.path.join(os.getcwd(), 'data', 'weights', file_name)
     score_dict = load_weights(filepath)
 
     return score_dict
@@ -170,8 +186,8 @@ def calc_score(score_dict, query):
 
 
 def main():
-    retro_dict = get_score_dict('weights.txt')
-    query = raw_input('Enter your idea: ')
+    retro_dict = get_score_dict('retro.txt')
+    query = input('Enter your idea: ')
     retro_score = calc_score(retro_dict, query)
     print(retro_score)
 

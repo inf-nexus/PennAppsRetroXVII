@@ -18,10 +18,39 @@ CORS(app)
 
 
 print('{0}\n\tLoading Model ...\n{0}'.format('-' * 32))
-model = model.getModel()
+sim_model = model.getModel()
 print('{0}\n\t\tSUCCESS!\n{0}'.format('-' * 32))
 
-retro_dict = model.gen_score_dict('weights.txt')
+retro_dict = model.get_score_dict('retro.txt')
+
+
+
+def format_response(predictions, originality_score=0, retro_score=0):
+    result = {
+        'projects': [],
+        'originality_score': originality_score,
+        'retro_score': retro_score
+    }
+
+    # dict_keys(
+    #     ['class_name', 'comment_count', 'description', 'has_video', 'like_count', 'members', 'name', 'photo', 'slug',
+    #      'tagline', 'tags', 'url', 'winner'])
+
+    for pred, score in predictions:
+        project = {
+            'project_name': pred['name'],
+            'photo_url': pred['photo'],
+            'tagline': ' '.join(pred['tagline']),
+            'project_url': pred['url'],
+            'tags': pred['tags'],
+            'winner': pred['winner'],
+            'similarity': str(score)
+        }
+
+        result['projects'].append(project)
+
+
+    return result
 
 
 @app.route('/')
@@ -36,34 +65,36 @@ def projects():
 
     print(request.method)
     if request.method == 'POST':
-        data = 'DUMMY HAHAHAHAHA'
+        global sim_model
+        # data = 'DUMMY HAHAHAHAHA'
+        #
+        # dummy = {
+        #     'projects': [
+        #         {
+        #             'project_name': 'Trash Dummy haha',
+        #             'photo_url': '',
+        #             'tagline': 'asdjasd',
+        #             'project_url': 'http://asdjkla.penn.de/asjiod',
+        #             'tags': ['tag1', 'tag2'],
+        #             'similarity': 0.4
+        #         },
+        #         {
+        #             'project_name': 'Trash Dummy haha',
+        #             'photo_url': '',
+        #             'tagline': 'asdjasd',
+        #             'project_url': 'http://asdjkla.penn.de/asjiod',
+        #             'tags': ['tag1', 'fancytag2'],
+        #             'similarity': 0.3
+        #         }
+        #     ],
+        #     'originality_score': 40
+        # }
 
-        # with open(fp, 'r') as f:
-        #     data = json.load(f)
+        predictions, originality = sim_model.calc_similarity(project_description)
+        # originality_score = model.get_originality_score()
+        retro_score = model.calc_score(retro_dict, project_description)
 
-        dummy = {
-            'projects': [
-                {
-                    'project_name': 'Trash Dummy haha',
-                    'photo_url': '',
-                    'tagline': 'asdjasd',
-                    'project_url': 'http://asdjkla.penn.de/asjiod',
-                    'tags': ['tag1', 'tag2'],
-                    'similarity': 0.4
-                },
-                {
-                    'project_name': 'Trash Dummy haha',
-                    'photo_url': '',
-                    'tagline': 'asdjasd',
-                    'project_url': 'http://asdjkla.penn.de/asjiod',
-                    'tags': ['tag1', 'fancytag2'],
-                    'similarity': 0.3
-                }
-            ],
-            'originality_score': 40
-        }
-
-        return jsonify(dummy)
+        return jsonify(format_response(predictions, originality_score=originality, retro_score=retro_score))
     else:
         return 'get projects {}'.format(project_description)
 
@@ -84,6 +115,6 @@ def projects():
     #   results['originality'] /= len(top_pred)
 
 
-query = input('Enter your idea: ')
-print(model.calc_similarity(query))
-print(model.calc_score(retro_dict, query))
+# query = input('Enter your idea: ')
+# print(sim_model.calc_similarity(query))
+# print(model.calc_score(retro_dict, query))
