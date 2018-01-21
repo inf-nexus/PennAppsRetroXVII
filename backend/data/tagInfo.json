@@ -1,0 +1,131 @@
+{
+    "javascript": [
+        "https://www.udemy.com/javascript-from-beginner-to-pro-best-course/",
+        "https://watchandcode.com/p/practical-javascript"
+    ],
+    "python": [
+        "https://www.learnpython.org/",
+        "https://www.codecademy.com/learn/learn-python"
+    ],
+    "css": [
+        "https://www.w3schools.com/css/",
+        "https://developer.mozilla.org/en-US/docs/Learn/CSS/Introduction_to_CSS"
+    ],
+    "html": [
+        "https://developer.mozilla.org/en-US/docs/Learn/HTML",
+        "https://www.codecademy.com/learn/learn-html"
+    ],
+    "java": [
+        "https://www.udemy.com/java-tutorial/",
+        "https://www.codecademy.com/learn/learn-java"
+    ],
+    "node.js": [
+        "https://github.com/maxogden/art-of-node/#the-art-of-node",
+        "https://www.nodejsera.com/30-days-of-node.html"
+    ],
+    "android": [
+        "https://developer.android.com/guide/index.html",
+        "https://www.udacity.com/course/new-android-fundamentals--ud851"
+    ],
+    "html5": [
+        "https://developer.mozilla.org/en-US/docs/Learn/HTML",
+        "https://www.codecademy.com/learn/learn-html"
+    ],
+    "jquery": [
+        "https://api.jquery.com/",
+        "https://learn.jquery.com/"
+    ],
+    "ios": [
+        "https://developer.apple.com/documentation/",
+        "https://www.udemy.com/the-art-of-real-ios-programming/"
+    ],
+    "css3": [
+        "https://www.w3schools.com/css/",
+        "https://developer.mozilla.org/en-US/docs/Learn/CSS/Introduction_to_CSS"
+    ],
+    "php": [
+        "http://php.net/docs.php",
+        "https://www.codecademy.com/en/tracks/php"
+    ],
+    "bootstrap": [
+        "http://bootstrapdocs.com/v3.0.3/docs/",
+        "https://www.w3schools.com/bootstrap/"
+    ],
+    "android-studio": [
+        "https://developer.android.com/studio/intro/index.html",
+        "https://developer.android.com/training/basics/firstapp/index.html"
+    ],
+    "unity": [
+        "https://docs.unity3d.com/Manual/index.html",
+        "https://unity3d.com/learn"
+    ],
+    "c#": [
+        "https://docs.microsoft.com/en-us/dotnet/csharp/",
+        "https://www.udemy.com/csharp-tutorial-for-beginners/"
+    ],
+    "arduino": [
+        "https://www.arduino.cc/en/main/documentation",
+        "https://www.arduino.cc/en/Tutorial/HomePage"
+    ],
+    "swift": [
+        "https://swift.org/documentation/",
+        "https://learnswift.tips/"
+    ],
+    "flask": [
+        "http://flask.pocoo.org/docs/0.12/",
+        "https://www.fullstackpython.com/flask.html"
+    ],
+    "mongodb": [
+        "https://docs.mongodb.com/manual/",
+        "https://www.tutorialspoint.com/mongodb/index.htm"
+    ],
+    "angular.js": [
+        "https://angular.io/docs",
+        "http://www.learn-angular.org/"
+    ],
+    "amazon-web-services": [
+        "https://aws.amazon.com/documentation/",
+        "https://aws.amazon.com/getting-started/"
+    ],
+    "firebase": [
+        "https://firebase.google.com/docs/",
+        "https://www.codecademy.com/ru/tracks/firebase"
+    ],
+    "google-maps": [
+        "https://developers.google.com/maps/documentation/"
+    ],
+    "mysql": [
+        "https://dev.mysql.com/doc/",
+        "https://www.tutorialspoint.com/mysql/index.htm"
+    ],
+    "c++": [
+        "http://devdocs.io/cpp/",
+        "http://www.learncpp.com/"
+    ],
+    "react": [
+        "https://reactjs.org/docs/hello-world.html",
+        "https://www.codecademy.com/learn/react-101"
+    ],
+    "heroku": [
+        "https://devcenter.heroku.com/"
+    ],
+    "django": [
+        "https://docs.djangoproject.com/en/2.0/"
+    ],
+    "raspberry-pi": [
+        "https://www.raspberrypi.org/documentation/"
+    ],
+    "opencv": [
+        "https://docs.opencv.org/"
+    ],
+    "machine-learning": [
+        "https://github.com/josephmisiti/awesome-machine-learning/blob/master/books.md",
+        "https://www.coursera.org/learn/machine-learning"
+    ],
+    "ibm-watson": [
+        "https://console.bluemix.net/developer/watson/documentation"
+    ],
+    "amazon-alexa": [
+        "https://developer.amazon.com/alexa"
+    ]
+}
