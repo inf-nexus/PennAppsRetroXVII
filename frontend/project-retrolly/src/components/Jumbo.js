@@ -56,7 +56,7 @@ class Jumbo extends Component {
 	renderOriginalityBar(){
 		if (this.state.originalityPercentage) {
 			return (
-				<Progress value={this.state.originalityPercentage} style={{'barColor': '#d94ac5', 'textAlign': 'center', 'width': '50%', 'marginLeft': '25%'}}>{this.state.originalityPercentage + '%'}</Progress>
+				<Progress value={this.state.originalityPercentage * 100} style={{'barColor': '#d94ac5', 'textAlign': 'center', 'width': '50%', 'marginLeft': '25%'}}>{parseInt(this.state.originalityPercentage * 100) + '%'}</Progress>
 				);
 		}
 	}

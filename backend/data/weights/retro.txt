@@ -1,0 +1,10 @@
+machine learning, -0.8
+nintendo, 0.5
+sega, 0.7
+mario, 0.75
+virtual reality, -0.7
+blockchain, -0.9
+time travel, 0.4
+star wars, 0.6
+robots, 0.35
+ai, -0.6

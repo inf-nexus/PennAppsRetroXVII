@@ -7,6 +7,8 @@ import {
   CarouselCaption
 } from 'reactstrap';
 import customstyles from '../styles/customstyles.css';
+import circlestyles from '../styles/progressCircleStyles.css';
+import CircularProgressbar from 'react-circular-progressbar';
 
 class Projects extends Component {
 
@@ -59,14 +61,17 @@ class Projects extends Component {
           		onExited={this.onExited}
           		key={project.project_name}
         	>
+          <span>
         	<a target="_blank" href={project.project_url}>
         	<img 
-        	src={project.photo_url}
+        	src={project.photo_url ? project.photo_url : 'https://devpost-challengepost.netdna-ssl.com/assets/defaults/thumbnail-placeholder-42bcab8d8178b413922ae2877d8b0868.gif'}
         	alt={project.project_name}
         	style={{'width': '400px', 'height': '300px', 'marginLeft': '35%', 'borderRadius': '10px'}}/>
         	</a>
+          <CircularProgressbar percentage={parseInt(parseFloat(project.similarity)*100)} />
+          </span>
           <CarouselCaption 
-          captionText={project.tags}
+          captionText={project.tagline}
            captionHeader={project.project_name}
             />
         </CarouselItem>
