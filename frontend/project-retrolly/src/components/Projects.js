@@ -1,11 +1,4 @@
 import React, { Component } from 'react';
-import { getProjects } from '../services/api';
-import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import GridList, { GridListTile, GridListTileBar } from 'material-ui/GridList';
-import Subheader from 'material-ui/Subheader';
-import IconButton from 'material-ui/IconButton';
-import InfoIcon from 'material-ui-icons/Info';
 import {
   Carousel,
   CarouselItem,
@@ -55,30 +48,22 @@ class Projects extends Component {
     this.setState({ activeIndex: newIndex });
   }
 
-	// renderProjects(){
-	// 	console.log(this.props.projects);
-	// 	if (this.props.projects) {
-	// 		return (this.props.projects.map(project =>
-	// 			//const {project_name, photo_url, tagline, project_url, tags, similariy} = project;
-	// 	));
-	// 	}
-	// }
-
 	render(){
 		const { activeIndex } = this.state;
 		const { projects } = this.props;
-		const slides = projects.map(project => {
+		if (projects.length > 0){
+					const slides = projects.map(project => {
 			return (
 			<CarouselItem
 	          onExiting={this.onExiting}
           		onExited={this.onExited}
-          		key={project.photo_url}
+          		key={project.project_name}
         	>
         	<a target="_blank" href={project.project_url}>
         	<img 
         	src={project.photo_url}
         	alt={project.project_name}
-        	style={{'width': '400px', 'height': '300px', 'marginLeft': '35%'}}/>
+        	style={{'width': '400px', 'height': '300px', 'marginLeft': '35%', 'borderRadius': '10px'}}/>
         	</a>
           <CarouselCaption 
           captionText={project.tags}
@@ -90,19 +75,6 @@ class Projects extends Component {
 		})
 		return(
 		<div>
-	        <style>
-	          {
-	            `.custom-tag {
-	                max-width: 100%;
-	                height: 400px;
-	                background: black;
-	              },
-	              .carousel-caption {
-	              	color: black;
-	              }
-	              `
-	          }
-	        </style>
 	        <Carousel
 	          activeIndex={activeIndex}
 	          next={this.next}
@@ -115,7 +87,11 @@ class Projects extends Component {
 	        </Carousel>
       </div>
 			)
+	}else{
+		return <div></div>
 	}
+}
+
 }
 
 export default Projects;

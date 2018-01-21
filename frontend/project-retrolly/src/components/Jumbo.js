@@ -4,7 +4,7 @@ import { Jumbotron, Button, Progress, FormGroup, Label, Input } from 'reactstrap
 import retrostyles from '../styles/retrostyles.css';
 import bootstrapStyles from 'bootstrap/dist/css/bootstrap.css';
 import { getProjects } from '../services/api';
-//import styles from 'material-components-web/dist/material-components-web.min.css';
+
 
 const styles = {
 	jumbotronStyle: {
@@ -12,7 +12,8 @@ const styles = {
 		'backgroundRepeat': 'no-repeat',
 		'backgroundSize': '100% auto',
 		'height': '700px',
-		'width': '100vw'
+		'width': '100vw',
+		'marginBottom': '0px'
 	},
 	titleStyle: {
 		'textAlign': 'center'
@@ -27,7 +28,8 @@ class Jumbo extends Component {
 		this.state={
 			originalityPercentage: undefined,
 			projectDescription: "",
-			projects: []
+			projects: [],
+			placeholderText: 'enter project description'
 
 		}
 	}
@@ -41,29 +43,27 @@ class Jumbo extends Component {
 	    e.preventDefault();
 	    getProjects(this.state.projectDescription)
 	    .then(res => {
-	    	console.log(res);
 	    	const { originality_score, projects} = res;
-	    	console.log(originality_score);
-	    	console.log(projects);
 	    	this.setState({
 	    		projectDescription: "",
 	    		originalityPercentage: originality_score,
-	    		projects: projects
+	    		projects: projects,
+	    		placeholderText: 'enter project description'
 	    	});
 	    });
 }
 
 	renderOriginalityBar(){
-		if (this.state.originalityPercentage){
+		if (this.state.originalityPercentage) {
 			return (
-				<Progress value={this.state.originalityPercentage} style={{'barColor': '#d94ac5', 'textAlign': 'center', 'width': '80%', 'marginLeft': '120px'}}>{this.state.originalityPercentage + '%'}</Progress>
+				<Progress value={this.state.originalityPercentage} style={{'barColor': '#d94ac5', 'textAlign': 'center', 'width': '50%', 'marginLeft': '25%'}}>{this.state.originalityPercentage + '%'}</Progress>
 				);
 		}
 	}
-	
+
 	render(){
 		return (
-			<div>
+			<div style={{'paddingBottom': '0px'}}>
 		      <Jumbotron style={styles.jumbotronStyle}>
 		        <h1 className="title--metallic" style={styles.titleStyle}></h1>
 		        <hr className="my-2" />
@@ -74,8 +74,9 @@ class Jumbo extends Component {
 	          			name="search" 
 	          			id="exampleSearch" 
 	          			autoComplete="off" 
-	          			placeholder="project description" 
+	          			placeholder={this.state.placeholderText}
 	          			value={this.state.projectDescription}
+	          			onClick={e => {this.setState({placeholderText: ''})}}
 		    			onChange={e => this.change(e)}
 	          			style={{width: '60%', 'textAlign': 'center', 'margin': 'auto'}}/>
 	          			<br />
@@ -88,20 +89,18 @@ class Jumbo extends Component {
 	          				</Button>
 	       			 </FormGroup>
 		        </p>
+		        <br />
 		        {this.renderOriginalityBar()}
 		        <hr className="my-2" />
+		        <br />
+		        <br />
 		        <Projects
 		        	projects={this.state.projects}
 		         />
 		      </Jumbotron>
-		      
     		</div>
 		);
 	}
 }
-
-      // <input class="form-control" placeholder="Search" name="srch-term" id="srch-term" type="text">
-      // <div class="input-group-btn">
-      //   <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
 
 export default Jumbo;
