@@ -24,13 +24,13 @@ const muiTheme = getMuiTheme({
 class App extends Component {
   render() {
     return (
-      <MuiThemeProvider muiTheme={muiTheme}>
+      
         <div style={{'overflow-y':'auto', 'overflow-x': 'hidden', height: '800px', 'width': '100%'}}>
           <RetroHeader />
-          <Body />
+            <Body />
           <Footer />
         </div>
-      </MuiThemeProvider>
+      
     );
   }
 }

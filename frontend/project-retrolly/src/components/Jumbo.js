@@ -25,7 +25,7 @@ class Jumbo extends Component {
 	constructor(props){
 		super(props);
 		this.state={
-			originalityPercentage: 25,
+			originalityPercentage: undefined,
 			projectDescription: "",
 			projects: undefined
 
@@ -38,21 +38,25 @@ class Jumbo extends Component {
   	};
 
   	onSubmit = e => {
-    e.preventDefault();
-    getProjects(this.state.projectDescription)
-    .then(res => {
-    	console.log(res);
-    	this.setState({
-    		projectDescription: "",
-    		projects: res
-    	});
-    });
+	    e.preventDefault();
+	    getProjects(this.state.projectDescription)
+	    .then(res => {
+	    	console.log(res);
+	    	const { originality_score, projects} = res;
+	    	console.log(originality_score);
+	    	console.log(projects);
+	    	this.setState({
+	    		projectDescription: "",
+	    		originalityPercentage: originality_score,
+	    		projects: projects
+	    	});
+	    });
 }
 
 	renderOriginalityBar(){
 		if (this.state.originalityPercentage){
 			return (
-				<Progress value="25" style={{'bar-color': '#d94ac5', 'textAlign': 'center', 'width': '80%', 'marginLeft': '120px'}}>{this.state.originalityPercentage + '%'}</Progress>
+				<Progress value={this.state.originalityPercentage} style={{'barColor': '#d94ac5', 'textAlign': 'center', 'width': '80%', 'marginLeft': '120px'}}>{this.state.originalityPercentage + '%'}</Progress>
 				);
 		}
 	}
@@ -83,12 +87,14 @@ class Jumbo extends Component {
 	          				Search
 	          				</Button>
 	       			 </FormGroup>
-	       			 {this.renderOriginalityBar()}
 		        </p>
+		        {this.renderOriginalityBar()}
+		        <hr className="my-2" />
 		        <Projects
 		        	projects={this.state.projects}
 		         />
 		      </Jumbotron>
+		      
     		</div>
 		);
 	}

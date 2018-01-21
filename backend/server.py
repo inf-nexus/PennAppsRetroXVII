@@ -3,22 +3,51 @@
 # export FLASK_APP=hello.py
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from scripts import test
+from scripts import test, model
 import os
 import json
 
 app = Flask(__name__)
 CORS(app)
+
+
 @app.route('/')
 def index():
-	return 'Index Page'
+    return 'Index Page'
+
 
 @app.route('/projects', methods=['POST'])
 def projects():
-	fp = os.path.join(os.getcwd(), 'data-1.json')
-	project_description = request.args.get('project_description')
-	test.test()
-	data = None
-	with open(fp, 'r') as f:
-		data = json.load(f)
-	return jsonify(data)
+    project_description = request.args.get('project_description')
+
+    print(request.method)
+    if request.method == 'POST':
+        data = 'DUMMY HAHAHAHAHA'
+        # with open(fp, 'r') as f:
+        #     data = json.load(f)
+
+        dummy = {
+            'projects': [
+                {
+                    'project_name': 'Trash Dummy haha',
+                    'photo_url': 'https://firefly-challengepost.netdna-ssl.com/usercontent/fill/333/222/cGhvdG9zL3Byb2R1Y3Rpb24vc29mdHdhcmVfdGh1bWJuYWlsX3Bob3Rvcy8wMDAvNTMyLzc0OS9kYXRhcy9vcmlnaW5hbC5wbmc=/Screen_Shot_2017-09-10_at_9.46.13_AM.png?signature=281fd2d2f8db7b19fcc81c7c1378cbf9de622059',
+                    'tagline': 'asdjasd',
+                    'project_url': 'http://asdjkla.penn.de/asjiod',
+                    'tags': ['tag1', 'tag2'],
+                    'similarity': 0.4
+                },
+                {
+                    'project_name': 'Trash Dummy haha',
+                    'photo_url': 'https://devpost-challengepost.netdna-ssl.com/assets/defaults/thumbnail-placeholder-42bcab8d8178b413922ae2877d8b0868.gif',
+                    'tagline': 'asdjasd',
+                    'project_url': 'http://asdjkla.penn.de/asjiod',
+                    'tags': ['tag1', 'fancytag2'],
+                    'similarity': 0.3
+                }
+            ],
+            'originality_score': 40
+        }
+
+        return jsonify(dummy)
+    else:
+        return 'get projects {}'.format(project_description)
