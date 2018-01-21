@@ -1,6 +1,13 @@
 .carousel-caption h3, p {
-	color: #ea43c9;
-	text-shadow: 2px 2px #16d9e0;
+	color: #ffffff;
+	text-shadow: 2px 2px #ea43c9;
+
+}
+
+.carousel-caption {
+	position: relative;
+	right: auto;
+	left: auto;
 }
 
 .progress-bar {

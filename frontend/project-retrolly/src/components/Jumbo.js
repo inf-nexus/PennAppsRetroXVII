@@ -11,7 +11,7 @@ const styles = {
 		backgroundImage: 'url(http://ak6.picdn.net/shutterstock/videos/28467886/thumb/1.jpg)',
 		'backgroundRepeat': 'no-repeat',
 		'backgroundSize': '100% auto',
-		'height': '700px',
+		'height': '750px',
 		'width': '100vw',
 		'marginBottom': '0px'
 	},
@@ -92,7 +92,6 @@ class Jumbo extends Component {
 		        <br />
 		        {this.renderOriginalityBar()}
 		        <hr className="my-2" />
-		        <br />
 		        <br />
 		        <Projects
 		        	projects={this.state.projects}
