@@ -5,7 +5,7 @@ import numpy as np
 
 import gensim
 
-from nltk.tokenize import sent_tokenize, word_tokenize
+from nltk.tokenize import word_tokenize
 import re
 
 import time
@@ -53,17 +53,14 @@ def preprocess_data(data):
         tagline = document['tagline']
         description = document['description']
 
-        # content = [re.findall(r'\w+', c) for c in sent_tokenize(content.lower())]
         temp_description = []
         if isinstance(description, str):
-            for c in sent_tokenize(description.lower()):
-                temp_description.append(re.findall(r'\w+', c))
+            temp_description = re.findall(r'\w+', description.lower())
 
-        # tagline = [re.findall(r'\w+', t) for t in sent_tokenize(tagline.lower())]
         temp_tagline = []
         if isinstance(tagline, str):
-            for t in sent_tokenize(tagline.lower()):
-                temp_tagline.append(re.findall(r'\w+', t))
+            temp_tagline = re.findall(r'\w+', tagline)
+
 
         data_pp.append(document)
 
@@ -80,39 +77,23 @@ class MagicModel(object):
         self.init_model()
 
     def extract_relevant_fields(self):
-        # result = []
-        # for document in self.data:
-        #     for word in document['tagline']:
-
-        # for document in self.data:
-            # print(type(document['tagline']))
-            # print(document['tagline'])
-            # print(type(document['description']))
-            # print(document['description'])
-
-        result = []
-        for document in self.data:
-            for word in document['tagline']:
-                result.append(word)
-
-            for word in document['description']:
-                result.append(word)
-
-        # return [document['tagline'] + document['description'] for document in self.data]
-        return result
+        return [document['tagline'] + document['description'] for document in self.data]
 
     @timeme
     def init_model(self):
         model_dict = {}
         if (os.path.isfile('model.p')):
+            print('Loading from File')
             model_dict = pickle.load(open('model.p', 'rb'))
             self.dictionary = model_dict['dictionary']
             self.corpus = model_dict['corpus']
             self.tf_idf = model_dict['tf_idf']
             self.model = model_dict['model']
         else:
-            self.dictionary = gensim.corpora.Dictionary(self.extract_relevant_fields())
-            self.corpus = [self.dictionary.doc2bow(document) for document in self.extract_relevant_fields()]
+            extracted_features = self.extract_relevant_fields()
+            print(extracted_features[1230])
+            self.dictionary = gensim.corpora.Dictionary(extracted_features)
+            self.corpus = [self.dictionary.doc2bow(document) for document in extracted_features]
             self.tf_idf = gensim.models.TfidfModel(self.corpus)
             model_path = os.path.join(os.getcwd(), 'models')
             self.model = gensim.similarities.Similarity(model_path, self.tf_idf[self.corpus], num_features=len(self.dictionary))
@@ -132,13 +113,17 @@ class MagicModel(object):
             for i, elem in enumerate(sorted_predictions):
                 if elem[1] < threshold:
                     return sorted_predictions[:i]
-            return sorted_predictions
+            # return sorted_predictions
         else:
             for i, elem in enumerate(sorted_predictions):
                 if elem[1] < threshold:
                     return sorted_predictions[:i]
-            return sorted_predictions[:n_best]
+            # return sorted_predictions[:n_best]
 
+        return self.convert2readable(sorted_predictions[:n_best])
+
+    def convert2readable(self, preds):
+        return [" ".join(self.data[pred[0]]['tagline']) for pred in preds]
 
     def convert2tfidf(self, text):
         query_doc = [w.lower() for w in word_tokenize(text)]
@@ -156,6 +141,7 @@ def main():
     model = MagicModel(data_preprocessed)
 
     return model
+
 
 if __name__ == '__main__':
     main()

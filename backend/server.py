@@ -35,6 +35,7 @@ def projects():
     print(request.method)
     if request.method == 'POST':
         data = 'DUMMY HAHAHAHAHA'
+
         # with open(fp, 'r') as f:
         #     data = json.load(f)
 
