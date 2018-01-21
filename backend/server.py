@@ -81,8 +81,6 @@ def projects():
 
     print(request.method)
     if request.method == 'POST':
-        print(project_description)
-
         global sim_model
         # data = 'DUMMY HAHAHAHAHA'
         #

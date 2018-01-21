@@ -5,9 +5,16 @@ backend/__pycache__/
 
 backend/scripts/__pycache__/
 
+<<<<<<< HEAD
 
 node_modules/
 
 data/
 
 model*.*
+=======
+model*.*
+node_modules/
+
+data/
+>>>>>>> 54774d7e39ac65f334b8802bba7ed031f8bf4a19
