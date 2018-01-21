@@ -13,7 +13,6 @@ import os
 import json
 
 
-
 app = Flask(__name__)
 CORS(app)
 
@@ -21,6 +20,7 @@ CORS(app)
 print('{0}\n\tLoading Model ...\n{0}'.format('-' * 32))
 model = model.main()
 print('{0}\n\t\tSUCCESS!\n{0}'.format('-' * 32))
+
 
 @app.route('/')
 def index():
@@ -37,7 +37,6 @@ def projects():
         data = 'DUMMY HAHAHAHAHA'
         # with open(fp, 'r') as f:
         #     data = json.load(f)
-
 
         dummy = {
             'projects': [
@@ -65,7 +64,7 @@ def projects():
     else:
         return 'get projects {}'.format(project_description)
 
-    # if request.method == 'POST': 
+    # if request.method == 'POST':
     #   query = 'sample idea query'
 
     #   top_pred = model.calc_similarity(query)
@@ -80,5 +79,6 @@ def projects():
     #       results['projects'].append(temp)
     #       results['originality_score'] += score
     #   results['originality'] /= len(top_pred)
+
 
 print(model.calc_similarity(input('TYPE INPUT: ')))
