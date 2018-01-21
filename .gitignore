@@ -1,2 +1,6 @@
 
 \.idea/
+
+backend/__pycache__/
+
+backend/scripts/__pycache__/
