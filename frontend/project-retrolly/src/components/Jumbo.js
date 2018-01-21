@@ -8,10 +8,10 @@ import { getProjects } from '../services/api';
 
 const styles = {
 	jumbotronStyle: {
-		backgroundImage: 'url(https://pbs.twimg.com/media/DOkI3B0WkAEMf9H.jpg)',
+		backgroundImage: 'url(http://ak6.picdn.net/shutterstock/videos/28467886/thumb/1.jpg)',
 		'backgroundRepeat': 'no-repeat',
 		'backgroundSize': '100% auto',
-		'height': '1200px',
+		'height': '700px',
 		'width': '100vw'
 	},
 	titleStyle: {
@@ -27,7 +27,7 @@ class Jumbo extends Component {
 		this.state={
 			originalityPercentage: undefined,
 			projectDescription: "",
-			projects: undefined
+			projects: []
 
 		}
 	}

@@ -5,7 +5,8 @@ import { Form, Jumbo, Projects } from './';
 const styles = {
 	jumbotronStyle: {
 		backgroundImage: 'url(https://pbs.twimg.com/media/DOkI3B0WkAEMf9H.jpg)',
-		'background-repeat': 'no-repeat'
+		'background-repeat': 'no-repeat',
+		'height': '100%'
 
 	}
 

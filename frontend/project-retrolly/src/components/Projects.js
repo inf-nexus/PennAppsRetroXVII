@@ -13,6 +13,7 @@ import {
   CarouselIndicators,
   CarouselCaption
 } from 'reactstrap';
+import customstyles from '../styles/customstyles.css';
 
 class Projects extends Component {
 
@@ -20,7 +21,6 @@ class Projects extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			projects: [],
 			activeIndex: 0
 		};
 		this.next = this.next.bind(this);
@@ -29,7 +29,6 @@ class Projects extends Component {
 	    this.onExiting = this.onExiting.bind(this);
 	    this.onExited = this.onExited.bind(this);
 	}
-
 
   onExiting() {
     this.animating = true;
@@ -41,13 +40,13 @@ class Projects extends Component {
 
   next() {
     if (this.animating) return;
-    const nextIndex = this.state.activeIndex === this.state.projects.length - 1 ? 0 : this.state.activeIndex + 1;
+    const nextIndex = this.state.activeIndex === this.props.projects.length - 1 ? 0 : this.state.activeIndex + 1;
     this.setState({ activeIndex: nextIndex });
   }
 
   previous() {
     if (this.animating) return;
-    const nextIndex = this.state.activeIndex === 0 ? this.state.projects.length - 1 : this.state.activeIndex - 1;
+    const nextIndex = this.state.activeIndex === 0 ? this.props.projects.length - 1 : this.state.activeIndex - 1;
     this.setState({ activeIndex: nextIndex });
   }
 
@@ -66,32 +65,42 @@ class Projects extends Component {
 	// }
 
 	render(){
-		const { activeIndex, projects } = this.state;
+		const { activeIndex } = this.state;
+		const { projects } = this.props;
 		const slides = projects.map(project => {
 			return (
 			<CarouselItem
-	          className="custom-tag"
-	          tag="div"
-	          key={project.project_name}
 	          onExiting={this.onExiting}
-	          onExited={this.onExited}
+          		onExited={this.onExited}
+          		key={project.photo_url}
         	>
-          <CarouselCaption className="text-danger" captionText={project.tags} captionHeader={project.project_name} />
+        	<a target="_blank" href={project.project_url}>
+        	<img 
+        	src={project.photo_url}
+        	alt={project.project_name}
+        	style={{'width': '400px', 'height': '300px', 'marginLeft': '35%'}}/>
+        	</a>
+          <CarouselCaption 
+          captionText={project.tags}
+           captionHeader={project.project_name}
+            />
         </CarouselItem>
 
 			);
 		})
-		// getProjects('trash cans that auto sort')
-		// .then(projects => this.setState({ projects }));
 		return(
-		<div style={{'height': '300px'}}>
+		<div>
 	        <style>
 	          {
 	            `.custom-tag {
 	                max-width: 100%;
-	                height: 500px;
+	                height: 400px;
 	                background: black;
-	              }`
+	              },
+	              .carousel-caption {
+	              	color: black;
+	              }
+	              `
 	          }
 	        </style>
 	        <Carousel
@@ -99,7 +108,7 @@ class Projects extends Component {
 	          next={this.next}
 	          previous={this.previous}
 	        >
-	          <CarouselIndicators items={this.state.projects} activeIndex={activeIndex} onClickHandler={this.goToIndex} />
+	          <CarouselIndicators items={projects} activeIndex={activeIndex} onClickHandler={this.goToIndex} />
 	          {slides}
 	          <CarouselControl direction="prev" directionText="Previous" onClickHandler={this.previous} />
 	          <CarouselControl direction="next" directionText="Next" onClickHandler={this.next} />
