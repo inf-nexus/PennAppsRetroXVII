@@ -1,0 +1,151 @@
+@import 'https://fonts.googleapis.com/css?family=Montserrat';
+@import 'https://fonts.googleapis.com/css?family=Yellowtail';
+body,
+html {
+  height: 100%;
+  overflow: hidden;
+}
+body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background: url("https://res.cloudinary.com/daniel-griffiths/image/upload/c_scale,q_80,w_1280/v1475698565/retro_space.jpg") #000;
+  background-size: cover;
+  -webkit-perspective: 500px;
+          perspective: 500px;
+  -webkit-filter: blur(0.5px);
+          filter: blur(0.5px);
+}
+body:before {
+  content: "";
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 100%;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(50%, rgba(18,16,16,0)), color-stop(50%, rgba(0,0,0,0.25))), -webkit-gradient(linear, left top, right top, from(rgba(255,0,0,0.06)), color-stop(rgba(0,255,0,0.02)), to(rgba(0,0,255,0.06)));
+  background: linear-gradient(rgba(18,16,16,0) 50%, rgba(0,0,0,0.25) 50%), linear-gradient(90deg, rgba(255,0,0,0.06), rgba(0,255,0,0.02), rgba(0,0,255,0.06));
+  z-index: 4;
+  background-size: 100% 3px, 3px 100%;
+  pointer-events: none;
+}
+.triangle {
+  border-top: rgba(48,11,51,0.87) 280px solid;
+  border-left: transparent 280px solid;
+  border-right: transparent 280px solid;
+  -webkit-transform: skewX(30deg) rotate(5deg);
+          transform: skewX(30deg) rotate(5deg);
+  position: absolute;
+  top: 170px;
+  left: 10px;
+  -webkit-filter: drop-shadow(-10px 14px 0px rgba(48,11,51,0.87));
+          filter: drop-shadow(-10px 14px 0px rgba(48,11,51,0.87));
+}
+.grain {
+  max-width: none;
+  width: 2200px;
+  height: 1125px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  z-index: 2;
+  opacity: 0.3;
+  pointer-events: none;
+}
+.audio {
+  display: none;
+}
+.container {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 500px;
+  height: 480px;
+  z-index: 3;
+  -webkit-filter: brightness(2);
+          filter: brightness(2);
+}
+.title--fancy {
+  font-family: 'Yellowtail', cursive;
+  font-size: 8em;
+  text-align: left;
+  width: 100%;
+  color: #ff4d91;
+  -webkit-filter: drop-shadow(0 0 2px #ff4d91);
+          filter: drop-shadow(0 0 2px #ff4d91);
+  margin-bottom: -20px;
+}
+.title--metallic {
+  font-family: 'Montserrat', sans-serif;
+  background: -webkit-linear-gradient(top, #e0cde1 0%, #4b1c4b 51%, #400047 51%, #675460 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-filter: drop-shadow(0 0 5px #4b1c4b);
+          filter: drop-shadow(0 0 5px #4b1c4b);
+  font-size: 5em;
+  text-align: center;
+}
+.title--neon {
+  font-family: 'Montserrat', sans-serif;
+  color: transparent;
+  font-size: 5em;
+  text-align: right;
+  width: 100%;
+  -webkit-text-stroke: 1px #b36cb3;
+  -webkit-transform: skew(-20deg);
+          transform: skew(-20deg);
+  margin-top: -8px;
+  -webkit-filter: drop-shadow(0 0 2px #b36cb3);
+          filter: drop-shadow(0 0 2px #b36cb3);
+}
+.grid {
+  width: 200%;
+  position: absolute;
+  bottom: -100px;
+  -webkit-transform: rotateX(70deg);
+          transform: rotateX(70deg);
+  z-index: 0;
+  background: -webkit-gradient(linear, left top, left bottom, from(#430f4b), to(#030103));
+  background: linear-gradient(#430f4b, #030103);
+  margin-top: 20;
+}
+.grid:before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 10px;
+  background: #fff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  -webkit-filter: blur(15px);
+          filter: blur(15px);
+}
+.grid__tile {
+  width: 50px;
+  height: 50px;
+  border: 1px solid #ff69b4;
+  float: left;
+  margin: 0 -1px -1px 0;
+}
