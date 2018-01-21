@@ -13,18 +13,12 @@ CORS(app)
 def index():
 	return 'Index Page'
 
-@app.route('/projects', methods=['GET', 'POST'])
+@app.route('/projects', methods=['POST'])
 def projects():
 	fp = os.path.join(os.getcwd(), 'data-1.json')
 	project_description = request.args.get('project_description')
 	test.test()
-	if request.method == 'POST':
-		#return 'post projects {}'.format(project_description)
-		#return app.send_static_file('data1.json')
-		data = ''
-		with open(fp, 'r') as f:
-			data = json.load(f)
-		print data
-		return jsonify(data)
-	else:
-		return 'get projects {}'.format(project_description)
+	data = None
+	with open(fp, 'r') as f:
+		data = json.load(f)
+	return jsonify(data)
