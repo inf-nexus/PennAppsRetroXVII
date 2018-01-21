@@ -20,7 +20,7 @@ class RetroHeader extends Component {
 					  <div className="triangle"></div>
 					  <h1 className="title--fancy">Welcome</h1>
 					  <h1 className="title--metallic">To</h1>
-					  <h1 className="title--neon">Retrolly</h1>
+					  <h1 className="title--neon">Dévjà Vu</h1>
 				</div>
 			<iframe className="grain" src="https://www.youtube.com/embed/8tZ_N3wP9Ko?autoplay=1&amp;loop=1&amp;controls=0&amp;iv_load_policy=3&amp;start=5&amp;showinfo=0&amp;autohide=1&amp;rel=0&amp;modestbranding=1"></iframe>
 			</div>

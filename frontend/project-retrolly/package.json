@@ -6,14 +6,12 @@
     "axios": "^0.17.1",
     "bootstrap": "^4.0.0",
     "jquery": "^3.3.0",
-    "material-ui": "^0.20.0",
     "popper.js": "^1.12.9",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-scripts": "1.1.0",
     "react-tap-event-plugin": "^3.0.2",
-    "reactstrap": "^5.0.0-alpha.4",
-    "rmwc": "^1.0.2"
+    "reactstrap": "^5.0.0-alpha.4"
   },
   "scripts": {
     "start": "react-scripts start",

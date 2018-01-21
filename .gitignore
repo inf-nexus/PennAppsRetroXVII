@@ -6,3 +6,6 @@ backend/__pycache__/
 backend/scripts/__pycache__/
 
 model*.*
+node_modules/
+
+data/

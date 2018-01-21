@@ -74,9 +74,8 @@ def index():
     return 'Index Page'
 
 
-@app.route('/projects', methods=['GET', 'POST'])
+@app.route('/projects', methods=['POST'])
 def projects():
-
     project_description = request.args.get('project_description')
 
     print(request.method)
