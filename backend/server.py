@@ -1,4 +1,9 @@
-# run using: export FLASK_APP=server.py, flask run
+# run using:
+#
+# export FLASK_APP=server.py
+# export FLASK_DEBUG=1
+# flask run
+#
 # run publicly flask run --host=0.0.0.0
 # export FLASK_APP=hello.py
 from flask import Flask, request, jsonify
@@ -7,8 +12,16 @@ from scripts import test, model
 import os
 import json
 
+
+
 app = Flask(__name__)
 CORS(app)
+
+#
+# print('{0}\n\tLoading Model ...\n{0}'.format('-' * 32))
+# model = model.MagicModel()
+# print('{0}\n\t\tSUCCESS!\n{0}'.format('-' * 32))
+
 
 
 @app.route('/')
