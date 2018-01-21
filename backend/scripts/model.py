@@ -11,6 +11,7 @@ import re
 import time
 
 import pickle
+import math
 
 
 def timeme(method):
@@ -133,7 +134,7 @@ class MagicModel(object):
         return query_doc_tf_idf
 
 
-def main():
+def getModel():
     filepath = os.path.join(os.getcwd(), 'data')
 
     data_raw = load_data(filepath)
@@ -141,6 +142,38 @@ def main():
     model = MagicModel(data_preprocessed)
 
     return model
+
+
+def load_weights(path):
+    weights = {}
+    with open(path, 'r') as f:
+        for line in f:
+            items = [item.strip() for item in line.split(',')]
+            weights[items[0]] = float(items[1])
+    return weights
+
+
+def get_score_dict(file_name):
+    filepath = os.path.join(os.getcwd(), 'data/' + file_name)
+    score_dict = load_weights(filepath)
+
+    return score_dict
+
+
+def calc_score(score_dict, query):
+    score = 0
+    for k, v in score_dict.items():
+        if k in query:
+            score += v
+
+    return 1 / (1 + math.exp(-1 * score))
+
+
+def main():
+    retro_dict = get_score_dict('weights.txt')
+    query = raw_input('Enter your idea: ')
+    retro_score = calc_score(retro_dict, query)
+    print(retro_score)
 
 
 if __name__ == '__main__':

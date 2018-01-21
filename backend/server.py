@@ -18,8 +18,10 @@ CORS(app)
 
 
 print('{0}\n\tLoading Model ...\n{0}'.format('-' * 32))
-model = model.main()
+model = model.getModel()
 print('{0}\n\t\tSUCCESS!\n{0}'.format('-' * 32))
+
+retro_dict = model.gen_score_dict('weights.txt')
 
 
 @app.route('/')
@@ -82,4 +84,6 @@ def projects():
     #   results['originality'] /= len(top_pred)
 
 
-print(model.calc_similarity(input('TYPE INPUT: ')))
+query = input('Enter your idea: ')
+print(model.calc_similarity(query))
+print(model.calc_score(retro_dict, query))
