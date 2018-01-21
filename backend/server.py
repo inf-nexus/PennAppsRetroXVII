@@ -81,4 +81,4 @@ def projects():
     #       results['originality_score'] += score
     #   results['originality'] /= len(top_pred)
 
-
+print(model.calc_similarity(input('TYPE INPUT: ')))

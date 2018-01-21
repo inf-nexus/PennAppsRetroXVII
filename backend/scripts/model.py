@@ -50,15 +50,25 @@ def preprocess_data(data):
 
     for document in data:
         tagline = document['tagline']
-        content = document['description']
+        description = document['description']
 
-        content = [re.findall(r'\w+', c) for c in sent_tokenize(content.lower())]
-        tagline = [re.findall(r'\w+', t) for t in sent_tokenize(tagline.lower())]
+
+        # content = [re.findall(r'\w+', c) for c in sent_tokenize(content.lower())]
+        temp_description = []
+        if isinstance(description, str):
+            for c in sent_tokenize(description.lower()):
+                temp_description.append(re.findall(r'\w+', c))
+
+        # tagline = [re.findall(r'\w+', t) for t in sent_tokenize(tagline.lower())]
+        temp_tagline = []
+        if isinstance(tagline, str):
+            for t in sent_tokenize(tagline.lower()):
+                temp_tagline.append(re.findall(r'\w+', t))
 
         data_pp.append(document)
 
-        data_pp[-1]['tagline'] = tagline
-        data_pp[-1]['content'] = content
+        data_pp[-1]['tagline'] = temp_tagline
+        data_pp[-1]['description'] = temp_description
 
     return data_pp
 
@@ -70,26 +80,55 @@ class MagicModel(object):
         self.init_model()
 
     def extract_relevant_fields(self):
-        return [document['tagline'] + document['description'] for document in self.data]
+        # result = []
+        # for document in self.data:
+        #     for word in document['tagline']:
+
+        # for document in self.data:
+            # print(type(document['tagline']))
+            # print(document['tagline'])
+            # print(type(document['description']))
+            # print(document['description'])
+
+        result = []
+        for document in self.data:
+            for word in document['tagline']:
+                result.append(word)
+
+            for word in document['description']:
+                result.append(word)
+
+
+        # return [document['tagline'] + document['description'] for document in self.data]
+        return result
+
+
 
 
     @timeme
     def init_model(self):
-        model_dict = {}
-        if (os.path.isfile('model.p')):
-            model_dict = pickle.load(open('model.p', 'rb'))
-        else:
-            model_dict['dictionary'] = gensim.corpora.Dictionary(self.extract_relevant_fields())
-            model_dict['corpus'] = [self.dictionary.doc2bow(document) for document in self.extract_relevant_fields()]
-            model['tf_idf'] = gensim.models.TfidfModel(self.corpus)
-            model_path = os.path.join(os.getcwd(), 'models')
-            model_dict['model'] = gensim.similarities.Similarity(model_path, self.tf_idf, num_features=len(self.dictionary))
-            pickle.dump(model_dict, open('model.p', 'wb'))
+        # model_dict = {}
+        # if (os.path.isfile('model.p')):
+        #     model_dict = pickle.load(open('model.p', 'rb'))
+        # else:
+        #     model_dict['dictionary'] = gensim.corpora.Dictionary(self.extract_relevant_fields())
+        #     model_dict['corpus'] = [self.dictionary.doc2bow(document) for document in self.extract_relevant_fields()]
+        #     model_dict['tf_idf'] = gensim.models.TfidfModel(self.corpus)
+        #     model_path = os.path.join(os.getcwd(), 'models')
+        #     model_dict['model'] = gensim.similarities.Similarity(model_path, self.tf_idf, num_features=len(self.dictionary))
+        #     pickle.dump(model_dict, open('model.p', 'wb'))
+        #
+        # self.dictionary = model_dict['dictionary']
+        # self.corpus = model_dict['corpus']
+        # self.tf_idf = model_dict['tf_idf']
+        # self.model = model_dict['model']
 
-        self.dictionary = model_dict['dictionary']
-        self.corpus = model_dict['corpus']
-        self.tf_idf = model_dict['tf_idf']
-        self.model = model_dict['model']
+        self.dictionary = gensim.corpora.Dictionary(self.extract_relevant_fields())
+        self.corpus = [self.dictionary.doc2bow(document) for document in self.extract_relevant_fields()]
+        self.tf_idf = gensim.models.TfidfModel(self.corpus)
+        model_path = os.path.join(os.getcwd(), 'models')
+        self.model = gensim.similarities.Similarity(model_path, self.tf_idf[self.corpus], num_features=len(self.dictionary))
+        # pickle.dump(self.model, open('model.p', 'wb'))
 
 
     def calc_similarity(self, text, n_best=5, threshold=0.0):
