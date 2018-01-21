@@ -1,3 +1,4 @@
 export FLASK_APP=server.py
-export FLASK_DEBUG=1
+debug_val=${1:-0}
+export FLASK_DEBUG=$debug_val
 flask run

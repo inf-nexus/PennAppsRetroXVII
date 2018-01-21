@@ -10,6 +10,8 @@ import re
 
 import time
 
+import pickle
+
 
 def timeme(method):
     def wrapper(*args, **kw):
@@ -71,14 +73,17 @@ class MagicModel(object):
         return [document['tagline'] + document['description'] for document in self.data]
 
 
-
     @timeme
     def init_model(self):
-        self.dictionary = gensim.corpora.Dictionary(self.extract_relevant_fields())
-        self.corpus = [self.dictionary.doc2bow(document) for document in self.extract_relevant_fields()]
-        self.tf_idf = gensim.models.TfidfModel(self.corpus)
-        model_path = os.path.join(os.getcwd(), 'models')
-        self.model = gensim.similarities.Similarity(model_path, self.tf_idf, num_features=len(self.dictionary))
+        if (os.path.isfile('model.p')):
+            self.model = pickle.load(open('model.p', 'rb'))
+        else:
+            self.dictionary = gensim.corpora.Dictionary(self.extract_relevant_fields())
+            self.corpus = [self.dictionary.doc2bow(document) for document in self.extract_relevant_fields()]
+            self.tf_idf = gensim.models.TfidfModel(self.corpus)
+            model_path = os.path.join(os.getcwd(), 'models')
+            self.model = gensim.similarities.Similarity(model_path, self.tf_idf, num_features=len(self.dictionary))
+            pickle.dump(self.model, open('model.p', 'wb'))
 
 
     def calc_similarity(self, text, n_best=5, threshold=0.0):
@@ -113,6 +118,7 @@ def main():
     data_preprocessed = preprocess_data(data_raw)
     model = MagicModel(data_preprocessed)
 
+    return model
 
 if __name__ == '__main__':
     main()

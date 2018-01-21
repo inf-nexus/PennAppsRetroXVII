@@ -17,12 +17,10 @@ import json
 app = Flask(__name__)
 CORS(app)
 
-#
-# print('{0}\n\tLoading Model ...\n{0}'.format('-' * 32))
-# model = model.MagicModel()
-# print('{0}\n\t\tSUCCESS!\n{0}'.format('-' * 32))
 
-
+print('{0}\n\tLoading Model ...\n{0}'.format('-' * 32))
+model = model.main()
+print('{0}\n\t\tSUCCESS!\n{0}'.format('-' * 32))
 
 @app.route('/')
 def index():
