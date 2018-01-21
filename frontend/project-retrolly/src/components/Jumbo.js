@@ -9,9 +9,9 @@ import { getProjects } from '../services/api';
 const styles = {
 	jumbotronStyle: {
 		backgroundImage: 'url(http://ak6.picdn.net/shutterstock/videos/28467886/thumb/1.jpg)',
-		'backgroundRepeat': 'no-repeat',
+		// 'backgroundRepeat': 'no-repeat',
 		'backgroundSize': '100% auto',
-		'height': '750px',
+		'height': '1000px',
 		'width': '100vw',
 		'marginBottom': '0px'
 	},
@@ -29,8 +29,9 @@ class Jumbo extends Component {
 			originalityPercentage: undefined,
 			projectDescription: "",
 			projects: [],
-			placeholderText: 'enter project description'
-
+			placeholderText: 'enter project description',
+			tag_links: [],
+			tags: []
 		}
 	}
 
@@ -43,17 +44,30 @@ class Jumbo extends Component {
 	    e.preventDefault();
 	    getProjects(this.state.projectDescription)
 	    .then(res => {
-	    	const { originality_score, projects} = res;
+	    	const { originality_score, projects, tag_links, tags} = res;
 	    	this.setState({
 	    		projectDescription: "",
 	    		originalityPercentage: originality_score,
 	    		projects: projects,
-	    		placeholderText: 'enter project description'
+	    		placeholderText: 'enter project description',
+	    		tag_links: tag_links,
+	    		tags: tags
 	    	});
 	    });
 }
 
-	renderOriginalityBar(){
+	renderTagTutorials() {
+		if (this.state.tag_links && this.state.tag_links.length > 0) {
+			const listitems = this.state.tag_links.map((item) =>
+				<li>
+					<a href={item}>{item}</a>
+				</li>
+			);
+			return (<div><h1>Resources</h1><ul>{listitems}</ul></div>);
+		}
+	}
+
+	renderOriginalityBar(){ 
 		if (this.state.originalityPercentage) {
 			return (
 				<Progress value={this.state.originalityPercentage * 100} style={{'barColor': '#d94ac5', 'textAlign': 'center', 'width': '50%', 'marginLeft': '25%'}}>{parseInt(this.state.originalityPercentage * 100) + '%'}</Progress>
@@ -96,6 +110,7 @@ class Jumbo extends Component {
 		        <Projects
 		        	projects={this.state.projects}
 		         />
+		         {this.renderTagTutorials()}
 		      </Jumbotron>
     		</div>
 		);
