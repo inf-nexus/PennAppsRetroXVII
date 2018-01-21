@@ -64,3 +64,21 @@ def projects():
         return jsonify(dummy)
     else:
         return 'get projects {}'.format(project_description)
+
+    # if request.method == 'POST': 
+    #   query = 'sample idea query'
+
+    #   top_pred = model.calc_similarity(query)
+
+    #   result = {
+    #       'projects':[],
+    #       'originality_score': 0
+    #       }
+    #   for index, score in top_pred:
+    #       temp = model.data[index]
+    #       temp['similarity'] = score
+    #       results['projects'].append(temp)
+    #       results['originality_score'] += score
+    #   results['originality'] /= len(top_pred)
+
+
