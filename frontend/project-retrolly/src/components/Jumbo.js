@@ -11,7 +11,7 @@ const styles = {
 		backgroundImage: 'url(http://ak6.picdn.net/shutterstock/videos/28467886/thumb/1.jpg)',
 		// 'backgroundRepeat': 'no-repeat',
 		'backgroundSize': '100% auto',
-		'height': '1000px',
+		'height': '1100px',
 		'width': '100vw',
 		'marginBottom': '0px'
 	},
@@ -27,6 +27,7 @@ class Jumbo extends Component {
 		super(props);
 		this.state={
 			originalityPercentage: undefined,
+			retroPercentage: undefined,
 			projectDescription: "",
 			projects: [],
 			placeholderText: 'enter project description',
@@ -44,10 +45,11 @@ class Jumbo extends Component {
 	    e.preventDefault();
 	    getProjects(this.state.projectDescription)
 	    .then(res => {
-	    	const { originality_score, projects, tag_links, tags} = res;
+	    	const { originality_score, retro_score, projects, tag_links, tags} = res;
 	    	this.setState({
 	    		projectDescription: "",
 	    		originalityPercentage: originality_score,
+	    		retroPercentage: retro_score,
 	    		projects: projects,
 	    		placeholderText: 'enter project description',
 	    		tag_links: tag_links,
@@ -67,10 +69,18 @@ class Jumbo extends Component {
 		}
 	}
 
-	renderOriginalityBar(){ 
+	renderOriginalityBar() { 
 		if (this.state.originalityPercentage) {
 			return (
-				<Progress value={this.state.originalityPercentage * 100} style={{'barColor': '#d94ac5', 'textAlign': 'center', 'width': '50%', 'marginLeft': '25%'}}>{parseInt(this.state.originalityPercentage * 100) + '%'}</Progress>
+				<div><center><h3>Originality Score</h3></center><Progress value={this.state.originalityPercentage * 100} style={{'barColor': '#d94ac5', 'textAlign': 'center', 'width': '50%', 'marginLeft': '25%'}}>{parseInt(this.state.originalityPercentage * 100) + '%'}</Progress></div>
+				);
+		}
+	}
+
+	renderRetroBar() {
+		if (this.state.retroPercentage) {
+			return (
+				<div><center><h3>Retro Score</h3></center><Progress value={this.state.retroPercentage * 100} style={{'barColor': '#d94ac5', 'textAlign': 'center', 'width': '50%', 'marginLeft': '25%'}}>{parseInt(this.state.retroPercentage * 100) + '%'}</Progress></div>
 				);
 		}
 	}
@@ -105,6 +115,8 @@ class Jumbo extends Component {
 		        </p>
 		        <br />
 		        {this.renderOriginalityBar()}
+		        <br />
+		        {this.renderRetroBar()}
 		        <hr className="my-2" />
 		        <br />
 		        <Projects
