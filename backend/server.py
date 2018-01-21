@@ -31,7 +31,8 @@ def format_response(predictions, originality_score=0, retro_score=0):
         'projects': [],
         'originality_score': originality_score,
         'retro_score': retro_score,
-        'tag_links': []
+        'tag_links': [],
+        'tags': []
     }
 
 
@@ -48,11 +49,15 @@ def format_response(predictions, originality_score=0, retro_score=0):
         tag_links = []
         if pred['tags']:
             for tag in pred['tags']:
-                if tag.lower() in tag_info and tag.lower not in appended_tags:
-                    tag_links.append(tag_info[tag.lower()])
+                if tag.lower() in tag_info and tag.lower() not in appended_tags:
+                    for link in tag_info[tag.lower()]:
+                        tag_links.append(link)
+                    # tag_links.append(tag_info[tag.lower()])
                     appended_tags.append(tag.lower())
 
+        print(tag_links)
         result['tag_links'] = tag_links
+        result['tags'] = appended_tags
 
         project = {
             'project_name': pred['name'],

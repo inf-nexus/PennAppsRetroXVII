@@ -139,13 +139,26 @@ class MagicModel(object):
 
     def calculate_originality(self, predictions):
 
-        scores = []
+        #scores = []
 
-        for elem in predictions[:10]:
-            scores.append(elem[1])
+        #for elem in predictions[:10]:
+         #   scores.append(elem[1])
 
-        print(sum(scores)/len(scores))
-        return sum(scores)/len(scores)
+        #print(sum(scores)/len(scores))
+
+        threshold = 0.5
+        total = 0
+        i = 0
+        for elem in predictions:
+            if elem[1] < threshold:
+                if i > 0:
+                    return 1 - total/i
+            total += elem[1]
+            i += 1
+        if i > 0:
+            return 1 - total/i
+        return 0
+      #  return sum(scores)/len(scores)
 
 
 
